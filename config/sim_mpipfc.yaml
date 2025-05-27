@@ -1,0 +1,130 @@
+grampc/opt:
+  Nhor: 50 #40
+  MaxGradIter: 4 #4
+  MaxMultIter: 1 #1
+  ShiftControl: 'on'
+  OptimControl: 'on'
+  IntegralCost: 'on'
+  TerminalCost: 'off'
+  IntegratorCost: 'trapezodial'
+  Integrator: 'heun'
+  LineSearchType: 'explicit2'
+  EqualityConstraints: 'off'
+  InequalityConstraints: 'on'
+  TerminalEqualityConstraints: 'off'
+  TerminalInequalityConstraints: 'off'
+  ConstraintsAbsTol: [0.01,0.01,0.01,0.01,0.01,0.01,0.01, 0.01,0.01,0.01,0.01,0.01,0.01,0.01,
+                      0.01,0.01,0.01,0.01,0.01,0.01,0.01, 0.01,0.01,0.01,0.01,0.01,0.01,0.01,
+                      0.01,0.01,0.01, 0.01,0.01,0.01,
+                      0.01,0.01,0.01, 0.01,0.01,0.01,
+                      0.01,0.01,0.01, 0.01,0.01,0.01,
+                      0.001, 0.0001, 0.0001]
+  PenaltyMax: 300 #300.0
+  PenaltyMin: 300 #300.0
+  PenaltyIncreaseFactor: 1.5
+  PenaltyDecreaseFactor: 0.9
+  PenaltyIncreaseThreshold: 0.7
+  MultiplierDampingFactor: 1
+  #MultiplierMax: 100
+  LineSearchMin: 0.001
+  LineSearchMax: 0.1
+  LineSearchInit: 0.01
+  #AugLagUpdateGradientRelTol: 1
+  print: false
+
+grampc/param:
+  Thor: 0.5
+  dt: 0.01
+  t0: 0.0
+  NpCost: 0
+  pCost: []
+  x0: [ 0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0] # s,ds
+  xdes: [ 0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+          0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+          0.0,0.0,0.0,0.0,0.0,0.0,
+          1.0,0.0] # s,ds
+  u0: [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+  udes: [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+  umax: [0.25,0.25,0.25,0.25,0.25,0.25,0.25,5]
+  umin: [-0.25,-0.25,-0.25,-0.25,-0.25,-0.25,-0.25,-5]
+  print: false
+
+grampc/setPoint:
+  q_des: [0.0,0.0,0.0,0.0,0.0,0.0,0.0] #[0.3,-0.5,0.5,-2.4,0.2,1.9,0.3] #[0.0,0.0,0.0,0.0,0.0,0.0,0.0] #
+  dq_des: [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+  ddq_des: [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+  p_des: [0.5,0.0,0.5,0,1,0,0] #Orientierung über Quaternionen w,x,y,z #[0.5,0.3,0.6,0.0,0,3.1416]
+  v_des: [0.0,0.0,0.0]
+  F_des: [0.0,0.0,0.0,0.0,0.0,0.0]
+  s_des: [1.0]
+  ds_des: [0.0]
+  dds_des: [0.0]
+
+grampc/weights:
+  # Terminal cost weights
+  S_q: [0.0,0.0,0.0,0.0,0.0,0.0,0.0]    # joint position
+  S_p: [0.0,0.0,0.0,0,0,0]              # ee pose
+  S_F: [0.0,0.0,0.0,0,0,0]              # ee force
+  # Integral cost weights
+  Q_q: [10.0,10.0,10.0,10.0,10.0,10.0,10.0]    # joint position (joint position control [10,10,10,10,10,10,10] )
+  Q_dq: [0,0,0,0,0,0,0]                  # joint velocity
+  Q_N: [0,0,0,0,0,0,0]                  # nullspace velocity
+  Q_p: [0,0,0,0,0,0]                  # pose (pose control [10,10,10,10,10,10] )
+  Q_v: [0,0,0]                          # EE velo (not implemented)
+  Q_F: [0.0,0.0,0.0,0,0,0]              # EE force (z-force control [0.0,0.0,0.0002,0,0,0])
+  Q_s: [0]
+  Q_ds: [0]
+  R: [1,1,1,1,1,1,1]                    # desired joint velocities
+  R_s: [0]
+
+grampc/constr:
+  q_min: [-2.7,-1.73,-2.7,-2.9,-2.7,0.0,-2.7]
+  q_max: [2.7,1.73,2.7,-0.2,2.7,3.6,2.7]
+  q_constr: true    # joint position constraints
+  dq_max: [0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+  dq_constr: false  # joint velocity constraints (better in umin umax)
+  p_min: [-2.0,-1.5,-0.60]
+  p_max: [2.0,1.5,0.60]
+  p_constr: false   # EE position constraint
+  p_constr_ellbow: false # specify the p_constr to the elbow
+  v_max: [0.1,0.1,0.1]
+  v_constr: false   # EE velocity constraint
+  F_min: [-15,-15.0,-15.0]
+  F_max: [15.0,15.0,15.0]
+  F_constr: false   # Force constraint
+
+mpic:
+  Ndof: 7
+  CartDof: 6
+  Nstates: 22
+  Nctr: 8
+  Neqc: 0
+  Nieqc: 49 # default -> 46
+
+ctr_param:
+  Kpd: [10000,10000,10000,10000,10000,10000,10000] #[800,800,800,300,250,150,50] #[10000,10000,10000,10000,10000,10000,10000] #[600,600,600,600,250,150,50]
+  Dpd: [500,500,500,500,500,500,500] #[50,50,50,20,20,20,10] #[500,500,500,500,500,500,500] #[50,50,50,20,20,20,10]
+
+
+environment:
+  Ke: [0,0,10000,0,0,0] # 500000
+
+
+controllerOptions:
+  updateSetPoint: false # update set point during operation (if skill==false)
+  updateWeights: false  # update weights during operation (if skill==false)
+  updateFreqMPIC: 100   # in Hz
+  writeStates: true     # Data logging of important quantities
+  writeFreq: 100 #150          # in Hz
+  writeHor: false       # Data logging of prediction horizon (only force implemented)
+  pubStates: true       # Publishing of states
+  pubFreq: 100 #150          # in Hz
+  skill: true           # enable/disable skill realization using task.yaml
+  repeatTask: true      # repeat the task if it is finished
+  extFaultDetect: false # activates listener for current MP state on a topic
+  fts: false            # true = use external force-torque sensor for wrench measurement; false = use intrinsic joint torque sensors
+  trajTimeSync: false   # enable/disable time synch for trajectory control
+  log_path: '../catkin_ws/src/lrt_mpipfc/exp_data/'

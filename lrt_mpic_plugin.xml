@@ -1,0 +1,12 @@
+<library path="lib/liblrt_mpic">
+  <class name="lrt_mpic/SimMpicController" type="lrt_mpic::SimMpicController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      MPIC Controller for Franka robots with generalized environmental stiffness and underlying joint space position control in simulation.
+    </description>
+  </class>
+  <class name="lrt_mpic/RealMpicController" type="lrt_mpic::RealMpicController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      MPIC Controller for Franka robots with generalized environmental stiffness and underlying joint space position control in real.
+    </description>
+  </class>
+</library>

@@ -1,0 +1,29 @@
+mp/param:
+    type: lissajous_motion
+    nSamples: [2]
+    q_min: [-2.7, -1.6, -2.7, -2.9, -2.7, 0, -2.7]
+    q_max: [2.7, 1.6, 2.7, -0.2, 2.7, 3.6, 2.7]
+    R: [0.1,0.1,0.1,0.1,0.1,0.1,0.1]
+    Qs:  [1]
+    Qds: [5]
+    Rs: [0.1]
+    Qp: [100, 100, 0, 50, 50, 50]
+    QF: [0, 0, 10, 0, 0, 0]
+
+mp/Wrench:
+    F_x: [0, 0]
+    F_y: [0, 0]
+    F_z: [-2, -2]
+    M_x: [0, 0]
+    M_y: [0, 0]
+    M_z: [0, 0]
+
+mp/Lissajous:
+    amplitudes: [0.0075, 0.0075]
+    frequencies: [4.5, 5.0]
+    phase_shift: [0]
+
+mp/transition:
+    p_z_th: [0.375]
+
+mp/s: [0, 6.28]

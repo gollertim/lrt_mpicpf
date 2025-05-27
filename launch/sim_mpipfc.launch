@@ -1,0 +1,59 @@
+<launch>
+  <!-- specify name of the task yaml file here -->
+  <param name="task_file_name" type="string" value="task"/>
+  <!-- specify path to task yaml file here -->
+  <param name="task_folder_path" type="string" value="../catkin_ws/src/lrt_mpipfc/config/Tasks/example_task/"/>
+  <!-- specify path to exception folder here (optional) -->
+  <param name="exception_folder_path" type="string" value="../catkin_ws/src/lrt_mpipfc/config/Tasks/example_task/exception/"/>
+
+  <!-- either MPIC-PF or PBD-Controller (i.e. only gravity compensation) is used -->
+  <arg name="use_pbd_controller" default="false"/>
+  <param name="use_pbd_controller" type="bool" value="$(arg use_pbd_controller)"/>
+
+  <!-- GAZEBO arguments -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="false"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="load_gripper" default="false"/>
+  <arg name="world_name" default="worlds/panda.world" />
+  <arg name="arm_id" default="panda" />
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find lrt_mpipfc)/urdf/robots/panda_arm_hand.urdf.xacro"/>
+
+  <!--launch GAZEBO with own world configuration -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find lrt_mpipfc)/urdf/worlds/panda.world"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="paused" value="true"/><!--$(arg paused)-->
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description
+                                                                    -urdf -model panda
+                                                                    -J panda_joint1 -0.44
+                                                                    -J panda_joint2 -0.75
+                                                                    -J panda_joint3 0.0
+                                                                    -J panda_joint4 -2.0
+                                                                    -J panda_joint5 0.0
+                                                                    -J panda_joint6 1.5
+                                                                    -J panda_joint7 0.75
+                                                                    -unpause"/>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam command="load" file="$(find lrt_mpipfc)/config/lrt_mpipfc.yaml"  subst_value="true" />
+  <rosparam command="load" file="$(find lrt_mpipfc)/config/sim_mpipfc.yaml"/>
+  <rosparam command="load" file="$(find lrt_mpipfc)/config/gazebo_pid_gains.yaml"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller sim_mpic_controller" />
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+  <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find lrt_mpipfc)/launch/rviz/mpipfc_rviz.rviz"/>
+
+</launch>

@@ -1,0 +1,5 @@
+task/param:
+  NSkills: [1.0]
+task/skill_1:
+  name: skill_1
+  folder_name: skill_1

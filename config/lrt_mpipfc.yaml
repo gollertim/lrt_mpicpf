@@ -1,0 +1,50 @@
+# Publish joint states
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+panda_hand_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - panda_finger_joint1
+    - panda_finger_joint2
+  gains:
+    panda_finger_joint1: { p: 1, d: 0.1, i: 0, i_clamp: 1 }
+    panda_finger_joint2: { p: 1, d: 0.1, i: 0, i_clamp: 1 }
+  state_publish_rate: 25
+
+sim_mpic_controller:
+      type: lrt_mpic/SimMpicController
+      arm_id: $(arg arm_id)
+      joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7
+        
+real_mpic_controller:
+      type: lrt_mpic/RealMpicController
+      arm_id: $(arg arm_id)
+      joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7
+      # Used to decide whether to enforce realtime mode [enforce|ignore]
+      realtime_config: enforce
+      # Configure the initial defaults for the collision behavior reflexes.
+      collision_config:
+        lower_torque_thresholds_acceleration: [80.0, 80.0, 72.0, 72.0, 64.0, 54.0, 54.0]  # [Nm]
+        upper_torque_thresholds_acceleration: [80.0, 80.0, 72.0, 72.0, 64.0, 54.0, 54.0]  # [Nm]
+        lower_torque_thresholds_nominal: [80.0, 80.0, 72.0, 72.0, 64.0, 54.0, 54.0]   # [Nm]
+        upper_torque_thresholds_nominal: [80.0, 80.0, 72.0, 72.0, 64.0, 54.0, 54.0]   # [Nm]
+        lower_force_thresholds_acceleration: [80.0, 80.0, 80.0, 100.0, 100.0, 100.0]  # [N, N, N, Nm, Nm, Nm]
+        upper_force_thresholds_acceleration: [80.0, 80.0, 80.0, 100.0, 100.0, 100.0] # [N, N, N, Nm, Nm, Nm]
+        lower_force_thresholds_nominal: [80.0, 80.0, 80.0, 100.0, 100.0, 100.0]  # [N, N, N, Nm, Nm, Nm]
+        upper_force_thresholds_nominal: [80.0, 80.0, 80.0, 100.0, 100.0, 100.0]  # [N, N, N, Nm, Nm, Nm]

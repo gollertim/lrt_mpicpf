@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>lrt_mpipfc</name>
+  <version>0.1.0</version>
+  <description>lrt_mpipfc package contains the controller framework for the model predictive interaction path following control</description>
+  <maintainer email="tim.goller@fau.de">Friedrich-Alexander-Universität Erlangen-Nürnberg</maintainer>
+  <license>0</license>
+
+  <url type="website">https://www.rt.tf.fau.de/</url>
+  <author>Tim Goller</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>controller_interface</depend>
+  <depend>control_msgs</depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>Eigen3</depend>
+  <depend>franka_hw</depend>
+  <depend>hardware_interface</depend>
+  <depend>kdl_parser</depend>
+  <depend>realtime_tools</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>std_msgs</depend>
+  <depend>tf</depend>
+  <depend>urdf</depend>
+  <depend>actionlib</depend>
+  <export>
+    <controller_interface plugin="${prefix}/lrt_mpic_plugin.xml"/>
+  </export>
+</package>

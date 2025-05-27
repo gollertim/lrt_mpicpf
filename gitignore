@@ -1,0 +1,38 @@
+distribute*/
+**build
+
+## Cmex
+*.mexw64
+*.obj
+*.mexa64
+*.mexw64.pdb
+
+## Matlab
+*.slxc
+*.fig
+*.mat
+
+# Texpad
+.texpadtmp
+
+# Misc
+*.o
+*.db
+
+# directories
+.vscode
+
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+*.kate-swap
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+*.zip
+*.pdf
+*.csv

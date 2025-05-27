@@ -1,0 +1,11 @@
+skill/param:
+  NMP: [3.0]
+skill/mp_1:
+  name: mp_1
+  file_name: mp_1.yaml
+skill/mp_2:
+  name: mp_2
+  file_name: mp_2.yaml
+skill/mp_3:
+  name: mp_3
+  file_name: mp_3.yaml

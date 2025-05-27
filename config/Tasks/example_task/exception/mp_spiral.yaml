@@ -1,0 +1,43 @@
+mp/param:
+  type: spiral_motion
+  nSamples: [2]
+  q_min: [-2.7, -1.6, -2.7, -2.9, -2.7, 0, -2.7]
+  q_max: [2.7, 1.6, 2.7, -0.2, 2.7, 3.6, 2.7]
+  R: [1,1,1,1,1,1,1]
+  Qp: [100, 100, 100, 0, 0, 0]
+  QF: [0, 0, 0, 0, 0, 0]
+  Qs: [1.0]
+  Qds: [10]
+  Rs: [0.1]
+
+mp/Wrench:
+  F_x: [0, 0]
+  F_y: [0, 0]
+  F_z: [-5, -5]
+  M_x: [0, 0]
+  M_y: [0, 0]
+  M_z: [0, 0]
+
+mp/Spiral:
+  radius: [0, 0.02]
+  rotation: [10]
+
+mp/s: [0, 1]
+
+mp/error:
+  reaction: none
+  exception: restartSkill 
+  Pose_condition:
+    selection: [0, 0, 0, 0, 0, 0, 0]  # 0 = not active; 1 = greater than, -1 = smaller than
+    threshold: [0, 0, 0, 0, 0, 0, 0]
+  Wrench_condition:
+    selection: [0, 0, 0, 0, 0, 0]     # 0 = not active; 1 = greater than, -1 = smaller than
+    threshold: [0, 0, 0, 0, 0, 0]
+
+mp/Transition:
+  Pose_condition:
+    selection: [1, 0, 0, 0, 0, 0]   # 0 = not active; 1 = greater than, -1 = smaller than
+    threshold: [0.43, 0, 0, 0, 0, 0] 
+  Wrench_condition:
+    selection: [0, 0, 0, 0, 0, 0]     # 0 = not active; 1 = greater than, -1 = smaller than
+    threshold: [0, 0, 0, 0, 0, 0]
